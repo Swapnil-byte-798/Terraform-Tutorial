@@ -61,7 +61,7 @@ resource aws_security_group my_sg {
 resource aws_instance my_ec2 {
     key_name=aws_key_pair.my_key.key_name
     security_groups=[aws_security_group.my_sg.name]
-    instance_type="t2.micro"
+    instance_type="t3.micro"
     ami="ami-0e5497a77ef21b5ac" #ubuntu 26.04 LTS
 
     root_block_device {
