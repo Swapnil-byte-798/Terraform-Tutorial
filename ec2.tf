@@ -59,10 +59,14 @@ resource "aws_security_group" "my_sg" {
 
 #ec2 instance
 resource "aws_instance" "my_ec2" {
-  count=4
+  for_each=tomap({
+    instance1 = "t3.micro",
+    instance2 = "t3.micro",
+    instance_small = "t3.small"
+})
   key_name        = aws_key_pair.my_key.key_name
   security_groups = [aws_security_group.my_sg.name]
-  instance_type   = var.aws_instance_type
+  instance_type   = each.value
   ami             = var.aws_ami_id           #ubuntu 26.04 LTS
   user_data       = file("install_ngnix.sh") #install nginx web server
 
@@ -72,7 +76,7 @@ resource "aws_instance" "my_ec2" {
   }
 
   tags = {
-    Name = "my-ec2-instance"
+    Name = each.key
   }
 }
 
