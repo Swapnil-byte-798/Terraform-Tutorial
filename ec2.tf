@@ -64,6 +64,8 @@ resource "aws_instance" "my_ec2" {
     instance2 = "t3.micro",
     instance_small = "t3.small"
 })
+  depends_on=[aws_key_pair.my_key, aws_security_group.my_sg,aws_default_vpc.default]
+
   key_name        = aws_key_pair.my_key.key_name
   security_groups = [aws_security_group.my_sg.name]
   instance_type   = each.value
