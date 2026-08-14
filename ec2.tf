@@ -73,7 +73,7 @@ resource "aws_instance" "my_ec2" {
   user_data       = file("install_ngnix.sh") #install nginx web server
 
   root_block_device {
-    volume_size = var.aws_volume_size
+    volume_size = var.env=="prd"?20:var.aws_volume_size
     volume_type = "gp3"
   }
 
