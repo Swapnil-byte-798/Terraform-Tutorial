@@ -61,7 +61,6 @@ resource "aws_security_group" "my_sg" {
 resource "aws_instance" "my_ec2" {
   for_each=tomap({
     instance1 = "t3.micro",
-    instance2 = "t3.micro",
     instance_small = "t3.small"
 })
   depends_on=[aws_key_pair.my_key, aws_security_group.my_sg,aws_default_vpc.default]
@@ -82,3 +81,18 @@ resource "aws_instance" "my_ec2" {
   }
 }
 
+
+#IMPORTING EXISTING EC2 INSTANCE:
+resource "aws_instance" "my_import_instance"{
+  provider="aws.us-east-1"
+  ami="unknown"
+  instance_type="unknown"
+}
+
+
+# IMPORTING KEY PAIR:
+resource "aws_key_pair" "my_import_key"{
+  provider="aws.us-east-1"
+  key_name="unknown"
+  public_key="unknown"
+}
